@@ -14,11 +14,28 @@ import {
   BarChart3,
   Building,
   GraduationCap,
-  Eye
+  Eye,
+  Home,
+  Globe,
+  Code,
+  Sparkles,
+  Briefcase,
+  Trophy
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const DummyPortfolio = () => {
+  const currentStyles = {
+    background: 'bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-slate-900 dark:via-purple-900 dark:to-slate-900',
+    card: 'backdrop-blur-2xl bg-white/80 dark:bg-slate-800/80 border border-white/50 dark:border-slate-700/50 shadow-2xl shadow-purple-500/10',
+    text: 'text-slate-900 dark:text-slate-100',
+    accent: 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg hover:shadow-purple-500/30',
+    glow: 'shadow-3xl shadow-purple-500/30 hover:shadow-purple-500/50',
+    header: 'bg-white/90 dark:bg-slate-800/90 backdrop-blur-2xl border-white/30 dark:border-slate-700/30',
+    mesh: 'opacity-20',
+    special: 'bg-gradient-to-r from-indigo-500/10 to-purple-600/10 border-gradient-to-r from-indigo-500/30 to-purple-600/30'
+  };
   const portfolioData = {
     name: "Alex Chen",
     title: "Full-Stack Developer & AI Enthusiast",
@@ -115,12 +132,23 @@ const DummyPortfolio = () => {
   }, {} as Record<string, typeof portfolioData.skills>);
 
   const ProjectCard = ({ project }: { project: any }) => (
-    <Card className="backdrop-blur-2xl bg-white/80 dark:bg-slate-800/80 border border-white/50 dark:border-slate-700/50 shadow-2xl shadow-purple-500/10 overflow-hidden group hover:shadow-3xl shadow-purple-500/30 hover:shadow-purple-500/50 transition-all duration-700 transform hover:-translate-y-2 relative">
+    <Card className={`${currentStyles.card} overflow-hidden group hover:${currentStyles.glow} transition-all duration-700 transform hover:-translate-y-2 relative`}>
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg" />
       
       <div className="p-6 relative z-10">
+        <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4 group-hover:glow-primary transition-all">
+          <Code className="w-6 h-6 text-white" />
+        </div>
+        
+        {project.featured && (
+          <Badge className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white border-none shadow-lg z-20">
+            <Star className="w-3 h-3 mr-1" />
+            Featured
+          </Badge>
+        )}
+        
         <div className="flex items-start justify-between mb-3">
-          <h3 className="text-xl font-bold group-hover:text-primary transition-colors duration-300 text-slate-900 dark:text-slate-100">
+          <h3 className={`text-xl font-bold group-hover:text-primary transition-colors duration-300 ${currentStyles.text}`}>
             {project.title}
           </h3>
           <div className="flex items-center space-x-1 text-sm text-muted-foreground bg-gray-100 dark:bg-slate-800 px-2 py-1 rounded-full">
@@ -164,12 +192,40 @@ const DummyPortfolio = () => {
   );
 
   return (
-    <div className="min-h-screen transition-all duration-700 bg-gradient-to-br from-indigo-50/30 via-purple-50/20 to-pink-50/30 dark:from-slate-900 dark:via-purple-900/10 dark:to-slate-900">
+    <div className={`min-h-screen transition-all duration-700 ${currentStyles.background}`}>
+      {/* Fixed Home Button */}
+      <div className="fixed top-6 left-6 z-50">
+        <Link to="/">
+          <Button 
+            size="sm" 
+            className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/50 dark:border-slate-700/50 text-slate-700 dark:text-slate-300 hover:bg-white hover:text-primary shadow-lg hover:shadow-xl transition-all duration-300 rounded-xl"
+          >
+            <Home className="w-4 h-4 mr-2" />
+            Home
+          </Button>
+        </Link>
+      </div>
+
+      {/* Portfolio Header - Floating */}
+      <div className="fixed top-6 right-6 z-50">
+        <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl border border-white/30 dark:border-slate-700/30 rounded-xl px-4 py-2 shadow-lg">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 rounded-lg bg-gradient-primary flex items-center justify-center shadow-md">
+              <Globe className="w-4 h-4 text-white" />
+            </div>
+            <div>
+              <p className="font-semibold text-sm text-foreground">Live Portfolio</p>
+              <p className="text-xs text-muted-foreground">Demo Version</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Background Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/30 via-purple-50/20 to-pink-50/30 dark:from-slate-900 dark:via-purple-900/10 dark:to-slate-900" />
-        <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-purple-400/8 rounded-full blur-3xl animate-pulse-slow" />
-        <div className="absolute bottom-1/3 right-1/3 w-64 h-64 bg-indigo-400/8 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '3s' }} />
+      <div className={`absolute inset-0 transition-all duration-700 ${currentStyles.mesh}`}>
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-purple-500/5 to-pink-500/5" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse-slow" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '2s' }} />
       </div>
 
       <main className="pt-20 pb-20 relative z-10">
@@ -178,31 +234,33 @@ const DummyPortfolio = () => {
           <div className="relative z-10 max-w-6xl mx-auto">
             <div className="mb-16">
               <div className="relative group mb-12">
-                {/* Avatar Glow Effect */}
-                <div className="absolute -inset-8 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-all duration-700 animate-pulse-slow" />
-                <div className="absolute -inset-4 bg-gradient-to-r from-indigo-400 to-purple-600 rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-all duration-500" />
+                {/* Enhanced Avatar Glow Effect */}
+                <div className="absolute -inset-12 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-all duration-700 animate-pulse-slow" />
+                <div className="absolute -inset-8 bg-gradient-to-r from-indigo-400 to-purple-600 rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-all duration-500" />
+                <div className="absolute -inset-4 bg-gradient-to-r from-indigo-300 to-purple-500 rounded-full blur-lg opacity-40 group-hover:opacity-60 transition-all duration-300" />
                 
-                <Avatar className="relative w-48 h-48 mx-auto ring-8 ring-white/20 dark:ring-slate-800/20 shadow-2xl transform group-hover:scale-105 transition-all duration-500">
+                <Avatar className="relative w-48 h-48 mx-auto ring-8 ring-white/20 dark:ring-slate-800/20 shadow-3xl transform group-hover:scale-105 transition-all duration-500">
                   <AvatarImage src="/placeholder.svg" alt={portfolioData.name} />
                   <AvatarFallback className="text-4xl font-bold bg-gradient-to-br from-indigo-500 to-purple-600 text-white">
                     {portfolioData.name.split(' ').map(n => n[0]).join('')}
                   </AvatarFallback>
                 </Avatar>
                 
-                {/* Status Indicator */}
-                <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border-4 border-white dark:border-slate-800 flex items-center justify-center shadow-lg animate-bounce-slow">
-                  <Activity className="w-8 h-8 text-white" />
+                {/* Enhanced Status Indicator */}
+                <div className="absolute -bottom-6 -right-6 w-20 h-20 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full border-4 border-white dark:border-slate-800 flex items-center justify-center shadow-xl animate-bounce-slow">
+                  <Activity className="w-10 h-10 text-white" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full animate-ping opacity-75"></div>
                 </div>
               </div>
               
               {/* Enhanced Typography */}
               <div className="space-y-6">
-                <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight">
+                <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent leading-tight animate-fade-in">
                   {portfolioData.name}
                 </h1>
                 
                 <div className="relative">
-                  <p className="text-2xl md:text-4xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+                  <p className={`text-2xl md:text-4xl font-bold ${currentStyles.text} mb-2`}>
                     {portfolioData.title}
                   </p>
                   <div className="w-32 h-1 bg-gradient-to-r from-indigo-500 to-purple-600 mx-auto rounded-full" />
@@ -215,7 +273,7 @@ const DummyPortfolio = () => {
               
               {/* Enhanced Contact Info */}
               <div className="flex flex-wrap items-center justify-center gap-6 mt-12">
-                <div className="flex items-center space-x-2 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 dark:border-slate-700/30">
+                <div className="flex items-center space-x-2 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/30 dark:border-slate-700/30 shadow-lg">
                   <MapPin className="w-4 h-4 text-muted-foreground" />
                   <span className="text-sm font-medium">{portfolioData.location}</span>
                 </div>
@@ -225,13 +283,14 @@ const DummyPortfolio = () => {
                 >
                   <Mail className="w-4 h-4" />
                   <span className="text-sm font-medium">Get in Touch</span>
+                  <Sparkles className="w-4 h-4 ml-1" />
                 </a>
                 <div className="flex space-x-4">
                   <a 
                     href={`https://github.com/${portfolioData.github}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/50 dark:border-slate-700/50 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-primary hover:shadow-lg transition-all duration-300"
+                    className="w-12 h-12 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/50 dark:border-slate-700/50 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-primary hover:shadow-lg transition-all duration-300 hover:scale-110"
                   >
                     <Github className="w-5 h-5" />
                   </a>
@@ -239,7 +298,7 @@ const DummyPortfolio = () => {
                     href={`https://linkedin.com/in/${portfolioData.linkedin}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-12 h-12 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/50 dark:border-slate-700/50 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-primary hover:shadow-lg transition-all duration-300"
+                    className="w-12 h-12 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/50 dark:border-slate-700/50 rounded-full flex items-center justify-center text-slate-700 dark:text-slate-300 hover:text-primary hover:shadow-lg transition-all duration-300 hover:scale-110"
                   >
                     <Linkedin className="w-5 h-5" />
                   </a>
@@ -252,9 +311,10 @@ const DummyPortfolio = () => {
         {/* About Section */}
         <section className="py-20 px-6">
           <div className="max-w-6xl mx-auto">
-            <Card className="backdrop-blur-2xl bg-white/80 dark:bg-slate-800/80 border border-white/50 dark:border-slate-700/50 shadow-2xl shadow-purple-500/10 p-8">
+            <Card className={`${currentStyles.card} p-8 hover:${currentStyles.glow} transition-all duration-500 group`}>
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4 flex items-center justify-center">
+                  <Sparkles className="w-8 h-8 mr-3 text-indigo-500" />
                   About Me
                 </h2>
               </div>
@@ -269,7 +329,8 @@ const DummyPortfolio = () => {
         <section className="py-20 px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4 flex items-center justify-center">
+                <Code className="w-10 h-10 mr-4 text-indigo-500" />
                 Featured Projects
               </h2>
               <p className="text-xl text-muted-foreground">
@@ -291,7 +352,8 @@ const DummyPortfolio = () => {
         <section className="py-20 px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4 flex items-center justify-center">
+                <BarChart3 className="w-10 h-10 mr-4 text-purple-500" />
                 Technical Skills
               </h2>
               <p className="text-xl text-muted-foreground">
@@ -301,9 +363,9 @@ const DummyPortfolio = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {Object.entries(skillsByCategory).map(([category, categorySkills], index) => (
-                <Card key={category} className="backdrop-blur-2xl bg-white/80 dark:bg-slate-800/80 border border-white/50 dark:border-slate-700/50 shadow-2xl shadow-purple-500/10 p-6 text-center animate-slide-in-up" style={{ animationDelay: `${index * 150}ms` }}>
+                <Card key={category} className={`${currentStyles.card} p-6 text-center group hover:${currentStyles.glow} transition-all duration-300 animate-slide-in-up`} style={{ animationDelay: `${index * 150}ms` }}>
                   <div className="mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+                    <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
                       {category === 'Frontend' && <Star className="w-6 h-6 text-white" />}
                       {category === 'Backend' && <Building className="w-6 h-6 text-white" />}
                       {category === 'Cloud' && <Award className="w-6 h-6 text-white" />}
@@ -311,14 +373,14 @@ const DummyPortfolio = () => {
                       {category === 'DevOps' && <Activity className="w-6 h-6 text-white" />}
                       {category === 'Database' && <GraduationCap className="w-6 h-6 text-white" />}
                     </div>
-                    <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-3">{category}</h3>
+                    <h3 className={`text-lg font-semibold ${currentStyles.text} mb-3`}>{category}</h3>
                   </div>
                   <div className="space-y-2">
                     {categorySkills.map((skill, skillIndex) => (
                       <Badge 
                         key={skillIndex} 
                         variant="secondary" 
-                        className="text-xs px-3 py-1 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/50 dark:to-purple-900/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800"
+                        className="text-xs px-3 py-1 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/50 dark:to-purple-900/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 hover:bg-gradient-to-r hover:from-indigo-500 hover:to-purple-600 hover:text-white transition-all duration-300"
                       >
                         {skill.name}
                       </Badge>
@@ -334,7 +396,8 @@ const DummyPortfolio = () => {
         <section className="py-20 px-6">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4">
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-4 flex items-center justify-center">
+                <Trophy className="w-10 h-10 mr-4 text-yellow-500" />
                 Achievements & Experience
               </h2>
               <p className="text-xl text-muted-foreground">
@@ -344,14 +407,17 @@ const DummyPortfolio = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
               {portfolioData.achievements.map((achievement, index) => (
-                <Card key={index} className="backdrop-blur-2xl bg-white/80 dark:bg-slate-800/80 border border-white/50 dark:border-slate-700/50 shadow-2xl shadow-purple-500/10 p-6 animate-slide-in-up" style={{ animationDelay: `${index * 200}ms` }}>
+                <Card key={index} className={`${currentStyles.card} p-6 hover:${currentStyles.glow} transition-all duration-500 group animate-slide-in-up`} style={{ animationDelay: `${index * 200}ms` }}>
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <Award className="w-6 h-6 text-white" />
+                    <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                      <Briefcase className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-1">{achievement.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-2">{achievement.issuer} • {achievement.date}</p>
+                      <h3 className={`text-lg font-semibold ${currentStyles.text} mb-1`}>{achievement.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-2 flex items-center">
+                        <Building className="w-3 h-3 mr-1" />
+                        {achievement.issuer} • {achievement.date}
+                      </p>
                       <p className="text-sm text-muted-foreground">{achievement.description}</p>
                     </div>
                   </div>
@@ -361,14 +427,17 @@ const DummyPortfolio = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {portfolioData.certificates.map((cert, index) => (
-                <Card key={index} className="backdrop-blur-2xl bg-white/80 dark:bg-slate-800/80 border border-white/50 dark:border-slate-700/50 shadow-2xl shadow-purple-500/10 p-6 animate-slide-in-up" style={{ animationDelay: `${index * 200 + 400}ms` }}>
+                <Card key={index} className={`${currentStyles.card} p-6 hover:${currentStyles.glow} transition-all duration-500 group animate-slide-in-up`} style={{ animationDelay: `${index * 200 + 400}ms` }}>
                   <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
                       <GraduationCap className="w-6 h-6 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-1">{cert.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-2">{cert.issuer} • {cert.date}</p>
+                      <h3 className={`text-lg font-semibold ${currentStyles.text} mb-1`}>{cert.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-2 flex items-center">
+                        <Award className="w-3 h-3 mr-1" />
+                        {cert.issuer} • {cert.date}
+                      </p>
                       <Badge variant="outline" className="text-xs">ID: {cert.credentialId}</Badge>
                     </div>
                   </div>
