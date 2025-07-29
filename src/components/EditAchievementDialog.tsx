@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,13 +30,40 @@ interface EditAchievementDialogProps {
 }
 
 const EditAchievementDialog = ({ isOpen, onClose, achievement, onSave, type }: EditAchievementDialogProps) => {
-  const [formData, setFormData] = useState<Achievement>({
-    id: 0,
-    title: '',
-    organization: '',
-    description: '',
-    ...achievement
-  });
+  const [formData, setFormData] = useState<Achievement>(() => ({
+    id: achievement?.id || 0,
+    title: achievement?.title || '',
+    organization: achievement?.organization || '',
+    description: achievement?.description || '',
+    duration: achievement?.duration || '',
+    year: achievement?.year || '',
+    location: achievement?.location || '',
+    skills: achievement?.skills || [],
+    credentialId: achievement?.credentialId || '',
+    category: achievement?.category || '',
+    issuer: achievement?.issuer || '',
+    status: achievement?.status || ''
+  }));
+
+  // Update form data when achievement prop changes
+  useEffect(() => {
+    if (achievement) {
+      setFormData({
+        id: achievement.id || 0,
+        title: achievement.title || '',
+        organization: achievement.organization || '',
+        description: achievement.description || '',
+        duration: achievement.duration || '',
+        year: achievement.year || '',
+        location: achievement.location || '',
+        skills: achievement.skills || [],
+        credentialId: achievement.credentialId || '',
+        category: achievement.category || '',
+        issuer: achievement.issuer || '',
+        status: achievement.status || ''
+      });
+    }
+  }, [achievement]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

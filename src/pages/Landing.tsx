@@ -104,11 +104,11 @@ const Landing = () => {
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
                 <h1 className="text-5xl lg:text-7xl font-black leading-tight animate-fade-in">
-                  <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent drop-shadow-sm">
+                  <span className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 dark:from-white dark:via-gray-200 dark:to-white bg-clip-text text-transparent drop-shadow-sm font-black tracking-tight">
                     AI-Powered
                   </span>
                   <br />
-                  <span className="text-2xl lg:text-4xl font-bold text-foreground/90 mt-2 block">
+                  <span className="text-3xl lg:text-5xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent mt-2 block tracking-wide">
                     Internship Portfolio Builder
                   </span>
                 </h1>
@@ -116,19 +116,19 @@ const Landing = () => {
             </div>
           </div>
 
-          {/* Enhanced Typewriter Effect */}
-          <div className="h-8 mb-6 flex items-center justify-center">
-            <div className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm px-6 py-2 rounded-full border border-white/30 dark:border-slate-700/30">
-              <span className="text-lg text-foreground-muted typewriter font-mono bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent font-semibold">
-                {typewriterText}
-              </span>
+            {/* Enhanced Typewriter Effect */}
+            <div className="h-8 mb-4 flex items-center justify-center">
+              <div className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm px-6 py-2 rounded-full border border-white/30 dark:border-slate-700/30">
+                <span className="text-lg text-foreground-muted typewriter font-mono bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent font-semibold">
+                  {typewriterText}
+                </span>
+              </div>
             </div>
-          </div>
 
-          {/* Enhanced Tagline */}
-          <p className="text-xl lg:text-2xl text-foreground-muted max-w-3xl mx-auto mb-8 animate-slide-in-up font-medium leading-relaxed">
-            One platform. <span className="text-gradient-primary font-semibold">Infinite potential.</span> Build your professional identity — smarter.
-          </p>
+            {/* Enhanced Tagline */}
+            <p className="text-xl lg:text-2xl text-foreground-muted max-w-3xl mx-auto mb-6 animate-slide-in-up font-medium leading-relaxed">
+              One platform. <span className="text-gradient-primary font-semibold">Infinite potential.</span> Build your professional identity — smarter.
+            </p>
 
           {/* Enhanced CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-slide-in-up">
@@ -138,7 +138,7 @@ const Landing = () => {
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
-            <Link to="/portfolio">
+            <Link to="/dummy-portfolio">
               <Button variant="outline" className="border-2 border-indigo-300 dark:border-indigo-600 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 font-semibold px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
                 <Play className="w-4 h-4 mr-2" />
                 View Live Demo

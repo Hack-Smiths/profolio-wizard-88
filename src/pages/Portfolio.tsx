@@ -187,21 +187,37 @@ const Portfolio = () => {
     navigator.clipboard.writeText("https://portfolio.alexchen.dev");
   };
 
-  const SkillCard = ({ skill }: { skill: any }) => (
-    <Card className={`${currentStyles.card} p-4 group hover:${currentStyles.glow} transition-all duration-300`}>
-      <div className="flex items-center justify-between mb-2">
-        <h4 className={`font-semibold ${currentStyles.text}`}>{skill.name}</h4>
-        <Badge variant="outline" className="text-xs">{skill.category}</Badge>
+  const skillsByCategory = portfolioData.skills.reduce((acc, skill) => {
+    if (!acc[skill.category]) {
+      acc[skill.category] = [];
+    }
+    acc[skill.category].push(skill);
+    return acc;
+  }, {} as Record<string, typeof portfolioData.skills>);
+
+  const SkillCard = ({ category, categorySkills }: { category: string, categorySkills: any[] }) => (
+    <Card className={`${currentStyles.card} p-6 text-center group hover:${currentStyles.glow} transition-all duration-300`}>
+      <div className="mb-4">
+        <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+          {category === 'Frontend' && <Star className="w-6 h-6 text-white" />}
+          {category === 'Backend' && <Building className="w-6 h-6 text-white" />}
+          {category === 'Cloud' && <Award className="w-6 h-6 text-white" />}
+          {category === 'AI/ML' && <BarChart3 className="w-6 h-6 text-white" />}
+          {category === 'DevOps' && <Activity className="w-6 h-6 text-white" />}
+          {category === 'Database' && <GraduationCap className="w-6 h-6 text-white" />}
+        </div>
+        <h3 className={`text-lg font-semibold ${currentStyles.text} mb-3`}>{category}</h3>
       </div>
-      <div className="skill-bar">
-        <div 
-          className="skill-fill" 
-          style={{ '--width': `${skill.level}%`, width: `${skill.level}%` } as any}
-        />
-      </div>
-      <div className="flex justify-between items-center mt-2">
-        <span className="text-xs text-muted-foreground">{skill.level}% Proficiency</span>
-        <BarChart3 className="w-4 h-4 text-muted-foreground" />
+      <div className="space-y-2">
+        {categorySkills.map((skill, skillIndex) => (
+          <Badge 
+            key={skillIndex} 
+            variant="secondary" 
+            className="text-xs px-3 py-1 bg-gradient-to-r from-indigo-50 to-purple-50 dark:from-indigo-900/50 dark:to-purple-900/50 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800"
+          >
+            {skill.name}
+          </Badge>
+        ))}
       </div>
     </Card>
   );
@@ -210,38 +226,18 @@ const Portfolio = () => {
     <Card className={`${currentStyles.card} overflow-hidden group hover:${currentStyles.glow} transition-all duration-700 transform hover:-translate-y-2 relative`}>
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-lg" />
       
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition-all duration-500 z-10" />
-        <img 
-          src={project.image} 
-          alt={project.title}
-          className="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700"
-        />
+      <div className="p-6 relative z-10">
+        <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4 group-hover:glow-primary transition-all">
+          <Code className="w-6 h-6 text-white" />
+        </div>
+        
         {project.featured && (
           <Badge className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white border-none shadow-lg z-20">
             <Star className="w-3 h-3 mr-1" />
             Featured
           </Badge>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 z-10">
-          <div className="absolute bottom-4 left-4 right-4 flex space-x-2">
-            <Button size="sm" className="flex-1 bg-white/20 backdrop-blur-md text-white border-white/30 hover:bg-white/30 transition-all duration-300" asChild>
-              <a href={project.demo} target="_blank" rel="noopener noreferrer">
-                <Eye className="w-4 h-4 mr-2" />
-                Demo
-              </a>
-            </Button>
-            <Button size="sm" className="flex-1 bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg hover:shadow-purple-500/30" asChild>
-              <a href={project.repo} target="_blank" rel="noopener noreferrer">
-                <Github className="w-4 h-4 mr-2" />
-                Code
-              </a>
-            </Button>
-          </div>
-        </div>
-      </div>
-      
-      <div className="p-6 relative z-10">
+        
         <div className="flex items-start justify-between mb-3">
           <h3 className={`text-xl font-bold group-hover:text-primary transition-colors duration-300 ${currentStyles.text}`}>
             {project.title}
@@ -256,7 +252,7 @@ const Portfolio = () => {
           {project.description}
         </p>
         
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mb-4">
           {project.tech.map((tech: string, index: number) => (
             <Badge 
               key={index} 
@@ -266,6 +262,21 @@ const Portfolio = () => {
               {tech}
             </Badge>
           ))}
+        </div>
+
+        <div className="flex space-x-2">
+          <Button size="sm" className="flex-1 bg-white/20 backdrop-blur-md text-slate-700 dark:text-slate-300 border-white/30 hover:bg-white/30 transition-all duration-300" asChild>
+            <a href={project.demo} target="_blank" rel="noopener noreferrer">
+              <Eye className="w-4 h-4 mr-2" />
+              Demo
+            </a>
+          </Button>
+          <Button size="sm" className="flex-1 bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg hover:shadow-purple-500/30" asChild>
+            <a href={project.repo} target="_blank" rel="noopener noreferrer">
+              <Github className="w-4 h-4 mr-2" />
+              Code
+            </a>
+          </Button>
         </div>
       </div>
     </Card>
@@ -515,9 +526,9 @@ const Portfolio = () => {
             </div>
             <EditButton section="Skills" />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {portfolioData.skills.map((skill, index) => (
-                <div key={skill.name} className="animate-slide-in-right" style={{ animationDelay: `${index * 100}ms` }}>
-                  <SkillCard skill={skill} />
+              {Object.entries(skillsByCategory).map(([category, categorySkills], index) => (
+                <div key={category} className="animate-slide-in-right" style={{ animationDelay: `${index * 100}ms` }}>
+                  <SkillCard category={category} categorySkills={categorySkills} />
                 </div>
               ))}
             </div>

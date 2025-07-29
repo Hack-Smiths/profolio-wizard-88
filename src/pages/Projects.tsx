@@ -73,12 +73,8 @@ const Projects = () => {
 
   const ProjectCard = ({ project }) => (
     <Card className="glass-card interactive group overflow-hidden">
-      <div className="aspect-video bg-gradient-soft rounded-lg mb-4 overflow-hidden">
-        <img 
-          src={project.image} 
-          alt={project.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-        />
+      <div className="w-12 h-12 bg-gradient-primary rounded-lg flex items-center justify-center mb-4 group-hover:glow-primary transition-all">
+        <Code className="w-6 h-6 text-white" />
       </div>
       
       <div className="space-y-3">
@@ -301,30 +297,54 @@ const Projects = () => {
   }
 
   function EditProjectForm({ project }) {
+    const [title, setTitle] = useState(project.title);
+    const [description, setDescription] = useState(project.description);
+    const [stack, setStack] = useState(project.stack.join(', '));
+
+    const handleSave = () => {
+      const updatedProject = {
+        ...project,
+        title,
+        description,
+        stack: stack.split(',').map(s => s.trim())
+      };
+      
+      setProjects(projects.map(p => p.id === project.id ? updatedProject : p));
+    };
+
     return (
       <div className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="edit-title">Project Title</Label>
-          <Input id="edit-title" defaultValue={project.title} />
+          <Input 
+            id="edit-title" 
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="edit-description">Description</Label>
           <Textarea 
             id="edit-description" 
-            defaultValue={project.description}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             rows={3}
           />
         </div>
         <div className="space-y-2">
           <Label htmlFor="edit-stack">Tech Stack</Label>
-          <Input id="edit-stack" defaultValue={project.stack.join(', ')} />
+          <Input 
+            id="edit-stack" 
+            value={stack}
+            onChange={(e) => setStack(e.target.value)}
+          />
         </div>
         <div className="flex space-x-3">
           <Button className="btn-electric flex-1">
             <Sparkles className="w-4 h-4 mr-2" />
             Enhance with AI
           </Button>
-          <Button className="btn-primary">Save</Button>
+          <Button className="btn-primary" onClick={handleSave}>Save</Button>
           <Button variant="outline">Cancel</Button>
         </div>
       </div>
